@@ -21,9 +21,10 @@ class FreshRSS_Entry extends Minz_Model {
 	private $feedId;
 	private $feed;
 	private $tags;
+	private $podcast;
 
 	public function __construct($feedId = '', $guid = '', $title = '', $authors = '', $content = '',
-	                            $link = '', $pubdate = 0, $is_read = false, $is_favorite = false, $tags = '') {
+	                            $link = '', $pubdate = 0, $is_read = false, $is_favorite = false, $tags = '', $podcast = '') {
 		$this->_title($title);
 		$this->_authors($authors);
 		$this->_content($content);
@@ -34,6 +35,7 @@ class FreshRSS_Entry extends Minz_Model {
 		$this->_feedId($feedId);
 		$this->_tags($tags);
 		$this->_guid($guid);
+		$this->_podcast($podcast);
 	}
 
 	public function id() {
@@ -136,6 +138,10 @@ class FreshRSS_Entry extends Minz_Model {
 		return $this->hash;
 	}
 
+	public function podcast() {
+		return $this->podcast;
+	}
+
 	public function _hash($value) {
 		$value = trim($value);
 		if (ctype_xdigit($value)) {
@@ -220,6 +226,9 @@ class FreshRSS_Entry extends Minz_Model {
 			$value = preg_split('/\s*[#,]\s*/', $value, -1, PREG_SPLIT_NO_EMPTY);
 		}
 		$this->tags = $value;
+	}
+	public function _podcast($value) {
+		$this->podcast = $value;
 	}
 
 	public function matches($booleanSearch) {
@@ -453,6 +462,7 @@ class FreshRSS_Entry extends Minz_Model {
 			'is_favorite' => $this->isFavorite(),
 			'id_feed' => $this->feed(),
 			'tags' => $this->tags(true),
+			'podcast' => $this->podcast(),
 		);
 	}
 }

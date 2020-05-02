@@ -901,7 +901,7 @@ SQL;
 		return array(array_merge($values, $searchValues),
 			'SELECT '
 			. ($type === 'T' ? 'DISTINCT ' : '')
-			. 'e.id FROM `_entry` e '
+			. 'e.id, f.name FROM `_entry` e '
 			. 'INNER JOIN `_feed` f ON e.id_feed = f.id '
 			. ($type === 't' || $type === 'T' ? 'INNER JOIN `_entrytag` et ON et.id_entry = e.id ' : '')
 			. 'WHERE ' . $where
@@ -915,7 +915,7 @@ SQL;
 
 		$sql = 'SELECT e0.id, e0.guid, e0.title, e0.author, '
 			. ($this->isCompressed() ? 'UNCOMPRESS(content_bin) AS content' : 'content')
-			. ', e0.link, e0.date, e0.is_read, e0.is_favorite, e0.id_feed, e0.tags '
+			. ', e0.link, e0.date, e0.is_read, e0.is_favorite, e0.id_feed, e0.tags, e2.name as podcast '
 			. 'FROM `_entry` e0 '
 			. 'INNER JOIN ('
 			. $sql
@@ -1105,7 +1105,8 @@ SQL;
 				$dao['date'],
 				$dao['is_read'],
 				$dao['is_favorite'],
-				isset($dao['tags']) ? $dao['tags'] : ''
+				isset($dao['tags']) ? $dao['tags'] : '',
+				$dao['podcast']
 			);
 		if (isset($dao['id'])) {
 			$entry->_id($dao['id']);

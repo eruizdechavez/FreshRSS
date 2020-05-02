@@ -1,5 +1,5 @@
 <?= '<?xml version="1.0" encoding="UTF-8" ?>'; ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:podcastFans="https://rss.podcast.fans/">
 	<channel>
 		<title><?= $this->rss_title ?></title>
 		<link><?= Minz_Url::display(null, 'html', true) ?></link>
@@ -32,6 +32,7 @@ foreach ($this->entries as $item) {
 ?>]]></description>
 			<pubDate><?= date('D, d M Y H:i:s O', $item->date(true)) ?></pubDate>
 			<guid isPermaLink="false"><?= $item->id() ?></guid>
+			<podcastFans:podcast><?= $item->podcast() ?></podcastFans:podcast>
 		</item>
 <?php } ?>
 
